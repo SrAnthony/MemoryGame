@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components/native'
 import { ThemeType } from 'Utils/Theme'
+import { darken } from 'polished'
 
 type PaddingsAndMarginsProps = {
   pTop?: number,
@@ -105,7 +106,7 @@ export const Text = styled.Text<TextProps>`
   font-size: ${p => p.size || 14}px;
 
   ${p => p.isFlex && css`flex: 1`};
-  ${p => p.color && css`color: ${p.theme.colors[p.color]}`};
+  ${p => p.color && css`color: ${darken(.45, p.theme.colors[p.color])}`};
   ${p => p.white && css`color: white`};
   ${p => p.hex && css`color: ${p.hex}`};
   ${p => p.fullWidth && css`width: 100%`};

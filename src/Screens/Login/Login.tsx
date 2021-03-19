@@ -5,7 +5,7 @@ import styled from 'styled-components/native'
 import AvatarSelector from './AvatarSelector'
 import TouchableScale from '../../Components/TouchableScale'
 
-const Home: React.FC = () => {
+const Login: React.FC = () => {
   
   return (
     <Container>
@@ -20,7 +20,7 @@ const Home: React.FC = () => {
       
       <Row pTop={35}>
         <Button>
-          <Text size={32} hex={darken(.5, '#C4ABB9')}>
+          <Text size={32} color="primary">
             ENTRAR
           </Text>
         </Button>
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+export default Login
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -41,12 +41,12 @@ const Container = styled.SafeAreaView`
 const Button = styled(TouchableScale)`
   border-width: 2px;
   border-bottom-width: 6px;
-  border-color: ${darken(.1, '#C4ABB9')};
+  border-color: ${p => darken(.1, p.theme.colors.primary)};
   padding: 10px 20px;
   width: 100%;
   align-items: center;
   border-radius: 10px;
-  background-color: #C4ABB9;
+  background-color: ${p => p.theme.colors.primary};
 `
 
 const NameInput = styled.TextInput`
