@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'
 import React, { useMemo } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider } from 'styled-components/native'
 import { Provider } from 'react-redux'
 import { MemoryGamePersistor, MemoryGameStore, useMemoryGameSelector } from './src/Reducers/MemoryGameReducer'
@@ -9,6 +9,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { PersistGate } from 'redux-persist/integration/react'
 import Theme from './src/Utils/Theme'
 import FullModalNavigator from './src/Navigators/FullModalNavigator'
+
+const NavigationTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#f1f1f1',
+  },
+}
 
 const App = () => {
   const current_player = useMemoryGameSelector(state => state.current_player)
@@ -23,7 +31,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <StatusBar hidden />
         
-        <NavigationContainer>
+        <NavigationContainer theme={NavigationTheme}>
           <FullModalNavigator />
         </NavigationContainer>
       </ThemeProvider>

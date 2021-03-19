@@ -30,7 +30,8 @@ const Home: React.FC = () => {
           </Text>
         </Button>
         
-        <Button style={{ marginTop: 15 }}>
+        {/* @ts-ignore */}
+        <Button style={{ marginTop: 15 }} onPress={() => navigation.navigate('Ranking')}>
           <Text size="large" color="primary">
             RANKING
           </Text>

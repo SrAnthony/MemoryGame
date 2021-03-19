@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 
 type HomeStackParamList = {
   Home: undefined,
+  Ranking: undefined,
 }
 
 type FullModalStackParamList = {

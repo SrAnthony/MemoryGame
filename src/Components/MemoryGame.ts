@@ -87,19 +87,6 @@ export const Row = styled.View<RowProps>`
   ${paddingsAndMarginsProps}
 `
 
-type TextProps = {
-  size?: number | 'large' | 'medium' | 'small',
-  align?: string,
-  alignCenter?: boolean,
-  color?: keyof ThemeType['colors'],
-  hex?: string,
-  isFlex?: boolean,
-  fullWidth?: boolean,
-  white?: boolean,
-  letterSpacing?: number,
-  serif?: boolean, // Usa fonte com serifa
-} & PaddingsAndMarginsProps
-
 export const Text = styled.Text<TextProps>`
   color: rgba(0, 0, 0, 0.9);
   font-family: ${p => p.theme.font_family};
@@ -117,8 +104,10 @@ export const Text = styled.Text<TextProps>`
     }
   }}px;
 
+  ${p => p.color && css`
+    color: ${p.color === 'primary' ? darken(.45, p.theme.colors[p.color]) : p.theme.colors[p.color]}`
+  };
   ${p => p.isFlex && css`flex: 1`};
-  ${p => p.color && css`color: ${darken(.45, p.theme.colors[p.color])}`};
   ${p => p.white && css`color: white`};
   ${p => p.hex && css`color: ${p.hex}`};
   ${p => p.fullWidth && css`width: 100%`};
@@ -126,6 +115,19 @@ export const Text = styled.Text<TextProps>`
 
   ${paddingsAndMarginsProps}
 `
+
+type TextProps = {
+  size?: number | 'large' | 'medium' | 'small',
+  align?: string,
+  alignCenter?: boolean,
+  color?: keyof ThemeType['colors'],
+  hex?: string,
+  isFlex?: boolean,
+  fullWidth?: boolean,
+  white?: boolean,
+  letterSpacing?: number,
+  serif?: boolean, // Usa fonte com serifa
+} & PaddingsAndMarginsProps
 
 export const Button = styled(TouchableScale)`
   border-width: 2px;
@@ -136,4 +138,20 @@ export const Button = styled(TouchableScale)`
   align-items: center;
   border-radius: 10px;
   background-color: ${p => p.theme.colors.primary};
+`
+
+type AvatarProps = {
+  size?: number,
+}
+
+export const Avatar = styled.ImageBackground<AvatarProps>`
+  width: ${p => p.size || 100}px;
+  height: ${p => p.size || 100}px;
+  border-radius: 15px;
+
+  shadow-color: #000;
+  shadow-offset: 0 8px;
+  shadow-opacity: .2;
+  shadow-radius: 10px;
+  elevation: 16;
 `
