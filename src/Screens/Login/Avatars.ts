@@ -214,9 +214,68 @@ export const FemaleAvatars = [
   },
 ]
 
+export const Animals = [
+  {
+    key: 'Assets/Avatars/Animals/Asset1.png',
+    image: require('Assets/Avatars/Animals/Asset1.png'),
+    color: '#ded756',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset2.png',
+    image: require('Assets/Avatars/Animals/Asset2.png'),
+    color: '#d7d8da',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset3.png',
+    image: require('Assets/Avatars/Animals/Asset3.png'),
+    color: '#af711e',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset4.png',
+    image: require('Assets/Avatars/Animals/Asset4.png'),
+    color: '#9bafb5',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset5.png',
+    image: require('Assets/Avatars/Animals/Asset5.png'),
+    color: '#2f9487',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset6.png',
+    image: require('Assets/Avatars/Animals/Asset6.png'),
+    color: '#ded756',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset7.png',
+    image: require('Assets/Avatars/Animals/Asset7.png'),
+    color: '#d2cdbd',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset8.png',
+    image: require('Assets/Avatars/Animals/Asset8.png'),
+    color: '#ac0037',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset9.png',
+    image: require('Assets/Avatars/Animals/Asset9.png'),
+    color: '#79a4bb',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset10.png',
+    image: require('Assets/Avatars/Animals/Asset10.png'),
+    color: '#cc9736',
+  },
+  {
+    key: 'Assets/Avatars/Animals/Asset11.png',
+    image: require('Assets/Avatars/Animals/Asset11.png'),
+    color: '#529896',
+  },
+]
+
 const Avatars = [
   ...MaleAvatars,
   ...FemaleAvatars,
+  ...Animals,
 ]
 
 export default Avatars

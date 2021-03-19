@@ -1,25 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Row, Text } from 'MemoryGame'
 import { darken } from 'polished'
+import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
 import styled from 'styled-components/native'
-import AvatarSelector from './AvatarSelector'
+import PlayerAvatar from './PlayerAvatar'
 import TouchableScale from '../../Components/TouchableScale'
 
 const Login: React.FC = () => {
+  const [name, setName] = useState('')
+  
+  const dispatch = useMemoryGameDispatch()
+  const current_player = useMemoryGameSelector(state => state.current_player)
+  
+  const login = () => {
+    if (name.length === 0) return
+    
+    dispatch({ type: 'set_current_player', payload: { ...current_player, name } })
+  }
   
   return (
-    <Container>
-      <AvatarSelector />
+    <Container behavior="padding">
+      <PlayerAvatar />
       
       <Row pTop={35}>
         <NameInput
           placeholder="Informe o seu nome"
           placeholderTextColor="#333"
+          onChangeText={setName}
         />
       </Row>
       
       <Row pTop={35}>
-        <Button>
+        <Button onPress={login}>
           <Text size="large" color="primary">
             ENTRAR
           </Text>
@@ -31,7 +43,7 @@ const Login: React.FC = () => {
 
 export default Login
 
-const Container = styled.SafeAreaView`
+const Container = styled.KeyboardAvoidingView`
   flex: 1;
   justify-content: center;
   align-items: center;

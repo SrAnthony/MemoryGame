@@ -2,12 +2,13 @@ import { CompositeNavigationProp, NavigatorScreenParams, RouteProp } from '@reac
 import { StackNavigationProp } from '@react-navigation/stack'
 
 type HomeStackParamList = {
-  Login: undefined,
+  Home: undefined,
 }
 
 type FullModalStackParamList = {
   HomeNavigator: NavigatorScreenParams<HomeStackParamList>,
   AvatarSelector: undefined,
+  Login: undefined,
 }
 
 type FullModalRouteType<T extends keyof FullModalStackParamList> = RouteProp<FullModalStackParamList,

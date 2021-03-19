@@ -6,12 +6,13 @@ import { HomeNavigationType } from '../../Navigators/Types'
 import TouchableScale from '../../Components/TouchableScale'
 import styled from 'styled-components/native'
 
-const AvatarSelector: React.FC = () => {
+const PlayerAvatar: React.FC = () => {
   const current_player = useMemoryGameSelector(state => state.current_player)
   
   const navigation = useNavigation<HomeNavigationType<'Login'>>()
   
   const onAvatarPress = () => {
+    // @ts-ignore
     navigation.navigate('AvatarSelector')
   }
   
@@ -24,7 +25,7 @@ const AvatarSelector: React.FC = () => {
   )
 }
 
-export default AvatarSelector
+export default PlayerAvatar
 
 // Precisa ser ImageBackground para funcionar as sombras
 const Avatar = styled.ImageBackground`

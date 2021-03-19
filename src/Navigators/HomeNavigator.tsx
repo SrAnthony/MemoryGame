@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Login from 'Screens/Login/Login'
 import { HomeStackParamList } from './Types'
+import Home from '../Screens/Home/Home'
 
 const Stack = createStackNavigator<HomeStackParamList>()
 
@@ -12,9 +12,8 @@ const HomeNavigator: React.FC = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Login"
     >
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   )
 }
