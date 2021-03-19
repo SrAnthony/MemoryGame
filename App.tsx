@@ -5,8 +5,10 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { ThemeProvider } from 'styled-components/native'
 import { Provider } from 'react-redux'
 import { MemoryGameStore, useMemoryGameSelector } from './src/Reducers/MemoryGameReducer'
-import Login from 'Screens/Login/Login'
+import { StatusBar } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Theme from './src/Utils/Theme'
+import FullModalNavigator from './src/Navigators/FullModalNavigator'
 
 const Stack = createStackNavigator()
 
@@ -19,17 +21,15 @@ const App = () => {
   }), [current_player.avatar.color])
   
   return (
-    <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Login" component={Login} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider theme={theme}>
+        <StatusBar hidden />
+        
+        <NavigationContainer>
+          <FullModalNavigator />
+        </NavigationContainer>
+      </ThemeProvider>
+    </SafeAreaProvider>
   )
 }
 

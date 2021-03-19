@@ -87,7 +87,7 @@ export const Row = styled.View<RowProps>`
 `
 
 type TextProps = {
-  size?: number,
+  size?: number | 'large' | 'medium' | 'small',
   align?: string,
   alignCenter?: boolean,
   color?: keyof ThemeType['colors'],
@@ -103,7 +103,18 @@ export const Text = styled.Text<TextProps>`
   color: rgba(0, 0, 0, 0.9);
   font-family: ${p => p.theme.font_family};
   text-align: ${p => p.alignCenter ? 'center' : (p.align || 'left')};
-  font-size: ${p => p.size || 14}px;
+  font-size: ${p => {
+    switch (p.size) {
+      case 'small':
+        return 14
+      case 'medium':
+        return 20
+      case 'large':
+        return 32
+      default:
+        return p.size || 14
+    }
+  }}px;
 
   ${p => p.isFlex && css`flex: 1`};
   ${p => p.color && css`color: ${darken(.45, p.theme.colors[p.color])}`};

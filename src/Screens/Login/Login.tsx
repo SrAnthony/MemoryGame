@@ -20,7 +20,7 @@ const Login: React.FC = () => {
       
       <Row pTop={35}>
         <Button>
-          <Text size={32} color="primary">
+          <Text size="large" color="primary">
             ENTRAR
           </Text>
         </Button>

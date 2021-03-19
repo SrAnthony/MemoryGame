@@ -1,25 +1,25 @@
 import React from 'react'
 import { Row } from 'MemoryGame'
-import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
+import { useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
+import { useNavigation } from '@react-navigation/native'
+import { HomeNavigationType } from '../../Navigators/Types'
 import TouchableScale from '../../Components/TouchableScale'
 import styled from 'styled-components/native'
-import Avatars from './Avatars'
 
 const AvatarSelector: React.FC = () => {
-  const dispatch = useMemoryGameDispatch()
   const current_player = useMemoryGameSelector(state => state.current_player)
   
-  const onAvatarSelect = (avatar: typeof Avatars[0]) => {
-    dispatch({ type: 'set_current_player', payload: { ...current_player, avatar } })
+  const navigation = useNavigation<HomeNavigationType<'Login'>>()
+  
+  const onAvatarPress = () => {
+    navigation.navigate('AvatarSelector')
   }
   
   return (
     <Row justifyCenter alignCenter>
-      {Avatars.map(avatar => (
-        <TouchableScale key={avatar.color} onPress={() => onAvatarSelect(avatar)}>
-          <Avatar source={avatar.image} />
-        </TouchableScale>
-      ))}
+      <TouchableScale onPress={onAvatarPress}>
+        <Avatar source={current_player.avatar.image} />
+      </TouchableScale>
     </Row>
   )
 }
