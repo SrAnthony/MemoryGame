@@ -13,8 +13,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		65F5C12E494753FD651FE90E /* libPods-MemoryGame-MemoryGameTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 423B11926C00564DBF939C23 /* libPods-MemoryGame-MemoryGameTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		E2DCE80B491984B02EFD08B8 /* libPods-MemoryGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD87E86F3EC388DAC86F1958 /* libPods-MemoryGame.a */; };
 		CD573D1B39404D49A799E0B6 /* VT323-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B72D570B4A994B5EB7B290FF /* VT323-Regular.ttf */; };
+		E2DCE80B491984B02EFD08B8 /* libPods-MemoryGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD87E86F3EC388DAC86F1958 /* libPods-MemoryGame.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,11 +41,11 @@
 		423B11926C00564DBF939C23 /* libPods-MemoryGame-MemoryGameTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MemoryGame-MemoryGameTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MemoryGame/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0BBDDA82F53298EE40C0C99 /* Pods-MemoryGame-MemoryGameTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryGame-MemoryGameTests.release.xcconfig"; path = "Target Support Files/Pods-MemoryGame-MemoryGameTests/Pods-MemoryGame-MemoryGameTests.release.xcconfig"; sourceTree = "<group>"; };
+		B72D570B4A994B5EB7B290FF /* VT323-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "VT323-Regular.ttf"; path = "../src/Assets/Fonts/VT323-Regular.ttf"; sourceTree = "<group>"; };
 		C6AE7092EC7777FB1DAD669E /* Pods-MemoryGame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryGame.release.xcconfig"; path = "Target Support Files/Pods-MemoryGame/Pods-MemoryGame.release.xcconfig"; sourceTree = "<group>"; };
 		CD87E86F3EC388DAC86F1958 /* libPods-MemoryGame.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MemoryGame.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB44A79C4F64EC87EADEC4DC /* Pods-MemoryGame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryGame.debug.xcconfig"; path = "Target Support Files/Pods-MemoryGame/Pods-MemoryGame.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		B72D570B4A994B5EB7B290FF /* VT323-Regular.ttf */ = {isa = PBXFileReference; name = "VT323-Regular.ttf"; path = "../src/Assets/Fonts/VT323-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +96,15 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = MemoryGame;
+			sourceTree = "<group>";
+		};
+		170FED89B303467184B6984C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B72D570B4A994B5EB7B290FF /* VT323-Regular.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -150,15 +159,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		170FED89B303467184B6984C /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				B72D570B4A994B5EB7B290FF /* VT323-Regular.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
