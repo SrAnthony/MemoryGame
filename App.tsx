@@ -1,16 +1,14 @@
 import 'react-native-gesture-handler'
 import React, { useMemo } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 import { ThemeProvider } from 'styled-components/native'
 import { Provider } from 'react-redux'
-import { MemoryGameStore, useMemoryGameSelector } from './src/Reducers/MemoryGameReducer'
+import { MemoryGamePersistor, MemoryGameStore, useMemoryGameSelector } from './src/Reducers/MemoryGameReducer'
 import { StatusBar } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { PersistGate } from 'redux-persist/integration/react'
 import Theme from './src/Utils/Theme'
 import FullModalNavigator from './src/Navigators/FullModalNavigator'
-
-const Stack = createStackNavigator()
 
 const App = () => {
   const current_player = useMemoryGameSelector(state => state.current_player)
@@ -35,6 +33,8 @@ const App = () => {
 
 export default () => (
   <Provider store={MemoryGameStore}>
-    <App />
+    <PersistGate persistor={MemoryGamePersistor}>
+      <App />
+    </PersistGate>
   </Provider>
 )

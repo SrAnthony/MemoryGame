@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native'
 import { ThemeType } from 'Utils/Theme'
 import { darken } from 'polished'
+import TouchableScale from './TouchableScale'
 
 type PaddingsAndMarginsProps = {
   pTop?: number,
@@ -124,4 +125,15 @@ export const Text = styled.Text<TextProps>`
   ${p => p.letterSpacing && css`letter-spacing: ${p.letterSpacing}px`};
 
   ${paddingsAndMarginsProps}
+`
+
+export const Button = styled(TouchableScale)`
+  border-width: 2px;
+  border-bottom-width: 6px;
+  border-color: ${p => darken(.1, p.theme.colors.primary)};
+  padding: 10px 20px;
+  width: 100%;
+  align-items: center;
+  border-radius: 10px;
+  background-color: ${p => p.theme.colors.primary};
 `

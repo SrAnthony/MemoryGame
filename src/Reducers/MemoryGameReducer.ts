@@ -1,7 +1,9 @@
-import { createSelectorHook, useDispatch } from 'react-redux'
+import { createDispatchHook, createSelectorHook } from 'react-redux'
 import { createStore } from 'redux'
 import { Animals } from '../Screens/Login/Avatars'
+import { persistReducer, persistStore } from 'redux-persist'
 import MemoryGame from './MemoryGameTypes'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 type MemoryGameStateType = {
   current_player: MemoryGame.PlayerType,
@@ -18,11 +20,9 @@ const initial_state: MemoryGameStateType = {
   },
 }
 
-type useMemoryGameDispatchType = () => (action: MemoryGameActionType) => void
-
 export const useMemoryGameSelector = createSelectorHook<MemoryGameStateType, MemoryGameActionType>()
 
-export const useMemoryGameDispatch: useMemoryGameDispatchType = useDispatch
+export const useMemoryGameDispatch = createDispatchHook<MemoryGameStateType, MemoryGameActionType>()
 
 const MemoryGameReducer = (state = initial_state, action: MemoryGameActionType) => {
   // Cria todos os sets
@@ -35,6 +35,14 @@ const MemoryGameReducer = (state = initial_state, action: MemoryGameActionType) 
   return state
 }
 
-export const MemoryGameStore = createStore(
-  MemoryGameReducer,
-)
+const persist_config = {
+  key: 'root',
+  storage: AsyncStorage,
+}
+
+const PersistedReducer = persistReducer(persist_config, MemoryGameReducer)
+
+export const MemoryGameStore = createStore(PersistedReducer)
+
+// @ts-ignore
+export const MemoryGamePersistor = persistStore(MemoryGameStore)

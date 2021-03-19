@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { Row, Text } from 'MemoryGame'
-import { darken } from 'polished'
+import { Button, Row, Text } from 'MemoryGame'
 import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
+import { useNavigation } from '@react-navigation/native'
 import styled from 'styled-components/native'
 import PlayerAvatar from './PlayerAvatar'
-import TouchableScale from '../../Components/TouchableScale'
 
 const Login: React.FC = () => {
   const [name, setName] = useState('')
@@ -12,10 +11,13 @@ const Login: React.FC = () => {
   const dispatch = useMemoryGameDispatch()
   const current_player = useMemoryGameSelector(state => state.current_player)
   
+  const navigation = useNavigation()
+  
   const login = () => {
     if (name.length === 0) return
     
     dispatch({ type: 'set_current_player', payload: { ...current_player, name } })
+    navigation.goBack()
   }
   
   return (
@@ -27,6 +29,7 @@ const Login: React.FC = () => {
           placeholder="Informe o seu nome"
           placeholderTextColor="#333"
           onChangeText={setName}
+          onEndEditing={login}
         />
       </Row>
       
@@ -48,17 +51,6 @@ const Container = styled.KeyboardAvoidingView`
   justify-content: center;
   align-items: center;
   margin: 0 35px;
-`
-
-const Button = styled(TouchableScale)`
-  border-width: 2px;
-  border-bottom-width: 6px;
-  border-color: ${p => darken(.1, p.theme.colors.primary)};
-  padding: 10px 20px;
-  width: 100%;
-  align-items: center;
-  border-radius: 10px;
-  background-color: ${p => p.theme.colors.primary};
 `
 
 const NameInput = styled.TextInput`
