@@ -3,8 +3,7 @@ import { Avatar, Row, Text } from 'MemoryGame'
 import { useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
 import { FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ChevronLeft } from 'react-native-feather'
-import TouchableScale from '../../Components/TouchableScale'
+import BackButton from '../../Components/BackButton'
 
 const Ranking: React.FC = () => {
   const current_player = useMemoryGameSelector(state => state.current_player)
@@ -29,9 +28,7 @@ const Ranking: React.FC = () => {
       }}
       ListHeaderComponent={
         <>
-          <TouchableScale style={{ left: -10 }}>
-            < ChevronLeft stroke='#333' width={40} height={40} />
-          </TouchableScale>
+          <BackButton />
           
           <Text size={40} pBottom={30}>
             Ranking

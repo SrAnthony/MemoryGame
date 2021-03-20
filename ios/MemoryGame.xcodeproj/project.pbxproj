@@ -41,7 +41,7 @@
 		423B11926C00564DBF939C23 /* libPods-MemoryGame-MemoryGameTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MemoryGame-MemoryGameTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MemoryGame/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0BBDDA82F53298EE40C0C99 /* Pods-MemoryGame-MemoryGameTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryGame-MemoryGameTests.release.xcconfig"; path = "Target Support Files/Pods-MemoryGame-MemoryGameTests/Pods-MemoryGame-MemoryGameTests.release.xcconfig"; sourceTree = "<group>"; };
-		B72D570B4A994B5EB7B290FF /* VT323-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "VT323-Regular.ttf"; path = "../src/Assets/Fonts/VT323-Regular.ttf"; sourceTree = "<group>"; };
+		B72D570B4A994B5EB7B290FF /* VT323-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "VT323-Regular.ttf"; path = "../src/Assets/Fonts/VT323-Regular.ttf"; sourceTree = "<group>"; };
 		C6AE7092EC7777FB1DAD669E /* Pods-MemoryGame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryGame.release.xcconfig"; path = "Target Support Files/Pods-MemoryGame/Pods-MemoryGame.release.xcconfig"; sourceTree = "<group>"; };
 		CD87E86F3EC388DAC86F1958 /* libPods-MemoryGame.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MemoryGame.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB44A79C4F64EC87EADEC4DC /* Pods-MemoryGame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemoryGame.debug.xcconfig"; path = "Target Support Files/Pods-MemoryGame/Pods-MemoryGame.debug.xcconfig"; sourceTree = "<group>"; };
@@ -104,7 +104,6 @@
 				B72D570B4A994B5EB7B290FF /* VT323-Regular.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -499,6 +498,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H6F4D75ARG;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MemoryGame/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -511,7 +511,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anthony.memory-game";
 				PRODUCT_NAME = MemoryGame;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -527,6 +527,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H6F4D75ARG;
 				INFOPLIST_FILE = MemoryGame/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -538,7 +539,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anthony.memory-game";
 				PRODUCT_NAME = MemoryGame;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

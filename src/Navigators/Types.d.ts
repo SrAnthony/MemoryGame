@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 type HomeStackParamList = {
   Home: undefined,
   Ranking: undefined,
+  Game: undefined,
 }
 
 type FullModalStackParamList = {

@@ -24,7 +24,8 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Row pTop={35} column>
-        <Button>
+        {/* @ts-ignore */}
+        <Button onPress={() => navigation.navigate('Game')}>
           <Text size="large" color="primary">
             JOGAR
           </Text>
