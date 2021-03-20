@@ -1,6 +1,6 @@
 import { createDispatchHook, createSelectorHook } from 'react-redux'
 import { createStore } from 'redux'
-import { Animals } from '../Screens/Login/Avatars'
+import { Animals } from '../Modals/AvatarSelector/Avatars'
 import { persistReducer, persistStore } from 'redux-persist'
 import MemoryGame from './MemoryGameTypes'
 import AsyncStorage from '@react-native-async-storage/async-storage'

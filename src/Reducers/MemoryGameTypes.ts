@@ -1,4 +1,4 @@
-import Avatars from '../Screens/Login/Avatars'
+import Avatars from '../Modals/AvatarSelector/Avatars'
 
 namespace MemoryGame {
   export type PlayerType = {

@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
 import { useNavigation } from '@react-navigation/native'
 import { FlatList } from 'react-native'
-import Avatars from '../../Screens/Login/Avatars'
+import Avatars from './Avatars'
 import TouchableScale from '../../Components/TouchableScale'
 
 const AvatarSelector: React.FC = () => {
