@@ -1,16 +1,18 @@
 import React, { memo, useEffect, useState } from 'react'
 import { Text } from 'MemoryGame'
 
-const TimePlayed: React.FC = () => {
+const TimePlayed: React.FC<{ paused?: boolean }> = ({ paused }) => {
   const [seconds, setSeconds] = useState(0)
   
   useEffect(() => {
+    if (paused) return
+    
     const interval = setInterval(() => {
       setSeconds(prev => prev + 1)
     }, 1000)
     
     return () => clearInterval(interval)
-  }, [])
+  }, [paused])
   
   const divisor_for_minutes = seconds % (60 * 60)
   const minutes_passed = Math.floor(divisor_for_minutes / 60)

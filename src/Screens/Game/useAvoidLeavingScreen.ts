@@ -1,9 +1,15 @@
 import { useEffect } from 'react'
-import { Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import useModalComponent from '../../Components/useModalComponent'
+import AlertModal from '../../Components/AlertModal'
 
 const useAvoidLeavingScreen = (is_playing: boolean) => {
   const navigation = useNavigation()
+  
+  const [openAlertModal] = useModalComponent(AlertModal, {
+    title: 'Desistir do jogo?',
+    subtitle: 'Ao sair seu progresso será perdido',
+  })
   
   useEffect(() =>
     navigation.addListener('beforeRemove', (e) => {
@@ -12,21 +18,14 @@ const useAvoidLeavingScreen = (is_playing: boolean) => {
       
       e.preventDefault()
       
-      Alert.alert(
-        'Desistir do jogo?',
-        'Ao sair seu progresso será perdido',
-        [
-          {
-            text: 'Continuar jogo', style: 'cancel', onPress: () => {
-            },
-          },
-          {
-            text: 'Desistir',
-            style: 'destructive',
-            onPress: () => navigation.dispatch(e.data.action),
-          },
-        ],
-      )
+      openAlertModal({
+        buttons: [{
+          label: 'Continuar no jogo',
+        }, {
+          label: 'Desistir',
+          onPress: () => navigation.dispatch(e.data.action),
+        }],
+      })
     }), [navigation, is_playing])
   
   return null

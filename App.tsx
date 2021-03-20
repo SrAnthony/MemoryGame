@@ -7,14 +7,18 @@ import { MemoryGamePersistor, MemoryGameStore, useMemoryGameSelector } from './s
 import { StatusBar } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { PersistGate } from 'redux-persist/integration/react'
+import { ComponentModalsContextProvider } from 'Components/useModalComponent'
+import { enableScreens } from 'react-native-screens'
 import Theme from './src/Utils/Theme'
 import FullModalNavigator from './src/Navigators/FullModalNavigator'
+
+enableScreens()
 
 const NavigationTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: '#f1f1f1',
+    background: Theme.colors.background,
   },
 }
 
@@ -31,9 +35,11 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <StatusBar hidden />
         
-        <NavigationContainer theme={NavigationTheme}>
-          <FullModalNavigator />
-        </NavigationContainer>
+        <ComponentModalsContextProvider>
+          <NavigationContainer theme={NavigationTheme}>
+            <FullModalNavigator />
+          </NavigationContainer>
+        </ComponentModalsContextProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   )

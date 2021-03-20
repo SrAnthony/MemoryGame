@@ -1,11 +1,11 @@
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { HomeStackParamList } from './Types'
 import Home from '../Screens/Home/Home'
 import Ranking from '../Screens/Ranking/Ranking'
 import Game from '../Screens/Game/Game'
 
-const Stack = createStackNavigator<HomeStackParamList>()
+const Stack = createNativeStackNavigator<HomeStackParamList>()
 
 const HomeNavigator: React.FC = () => {
   
@@ -13,6 +13,7 @@ const HomeNavigator: React.FC = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled: true,
       }}
     >
       <Stack.Screen name="Home" component={Home} />

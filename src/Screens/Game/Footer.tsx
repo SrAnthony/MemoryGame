@@ -4,12 +4,12 @@ import { useNavigation } from '@react-navigation/native'
 import TimePlayed from './TimePlayed'
 import TouchableScale from '../../Components/TouchableScale'
 
-const Footer: React.FC = () => {
+const Footer: React.FC<{ time_paused?: boolean }> = ({ time_paused }) => {
   const navigation = useNavigation()
   
   return (
     <Row column alignCenter pTop={25}>
-      <TimePlayed />
+      <TimePlayed paused={time_paused} />
       
       <TouchableScale style={{ marginTop: 25 }} onPress={() => navigation.goBack()}>
         <Text size="medium" hex="red">

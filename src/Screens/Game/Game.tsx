@@ -14,11 +14,11 @@ import useGame from './useGame'
 const Game: React.FC = () => {
   const insets = useSafeAreaInsets()
   
-  const cardsRef = useRef<CardFlip[]>([])
+  const cardsRef = useRef<(CardFlip | null)[]>([])
   
   const random_cards = useRandomCards()
   
-  const { onCardPress, flipped_cards, playing_cards, rounds } = useGame(cardsRef, random_cards)
+  const { onCardPress, rounds, game_is_finished } = useGame(cardsRef, random_cards)
   
   useAvoidLeavingScreen(rounds > 0)
   
@@ -29,27 +29,30 @@ const Game: React.FC = () => {
       onCardPress={onCardPress}
       cardsRef={cardsRef}
     />
-  ), [flipped_cards, playing_cards])
+  ), [])
   
   return (
     <Container>
       <FlatList
-        scrollEnabled={false}
+        bounces={false}
         data={random_cards}
         key={CARDS_PER_ROW}
         numColumns={CARDS_PER_ROW}
         keyExtractor={useCallback((_, index) => index.toString(), [])}
         renderItem={renderItem}
         ListHeaderComponent={
-          <Text size="large" alignCenter pBottom={25}>
+          <Text size="large" alignCenter pBottom={25} pTop={15}>
             Jogadas: {rounds}
           </Text>
         }
-        ListFooterComponent={<Footer />}
+        ListFooterComponent={<Footer time_paused={game_is_finished} />}
         contentContainerStyle={{
           paddingTop: insets.top,
+          paddingHorizontal: 5,
         }}
       />
+    
+    
     </Container>
   )
 }

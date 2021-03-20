@@ -3,9 +3,9 @@ import { Avatar, Text } from 'MemoryGame'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
 import { useNavigation } from '@react-navigation/native'
+import { FlatList } from 'react-native'
 import Avatars from '../../Screens/Login/Avatars'
 import TouchableScale from '../../Components/TouchableScale'
-import DismissableFlatList from '../../Components/DismissableFlatList'
 
 const AvatarSelector: React.FC = () => {
   const dispatch = useMemoryGameDispatch()
@@ -21,7 +21,7 @@ const AvatarSelector: React.FC = () => {
   }
   
   return (
-    <DismissableFlatList
+    <FlatList
       data={Avatars}
       numColumns={3}
       contentContainerStyle={{

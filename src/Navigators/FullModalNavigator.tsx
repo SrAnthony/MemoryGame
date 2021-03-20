@@ -1,31 +1,20 @@
 import React from 'react'
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
-import { Dimensions } from 'react-native'
 import { FullModalStackParamList } from './Types'
+import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import HomeNavigator from './HomeNavigator'
 import AvatarSelector from '../Modals/AvatarSelector/AvatarSelector'
 import Login from '../Screens/Login/Login'
 
-const Stack = createStackNavigator<FullModalStackParamList>()
-
-const { height } = Dimensions.get('window')
+const Stack = createNativeStackNavigator<FullModalStackParamList>()
 
 const FullModalNavigator: React.FC = () => {
   
   return (
     <Stack.Navigator
-      mode="modal"
-      detachInactiveScreens={false}
-      screenOptions={({ navigation, route }) => ({
+      screenOptions={{
+        stackPresentation: 'modal',
         headerShown: false,
-        // @ts-ignore
-        gestureEnabled: route.params?.gestureEnabled || false,
-        cardOverlayEnabled: true,
-        gestureResponseDistance: {
-          vertical: height,
-        },
-        ...TransitionPresets.ModalPresentationIOS,
-      })}
+      }}
     >
       <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
       <Stack.Screen name="AvatarSelector" component={AvatarSelector} />

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Row, Text } from 'MemoryGame'
 import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
 import { useNavigation } from '@react-navigation/native'
+import { Platform } from 'react-native'
 import styled from 'styled-components/native'
 import PlayerAvatar from './PlayerAvatar'
 
@@ -21,7 +22,7 @@ const Login: React.FC = () => {
   }
   
   return (
-    <Container behavior="padding">
+    <Container behavior={Platform.select({ ios: 'padding' })}>
       <PlayerAvatar />
       
       <Row pTop={35}>

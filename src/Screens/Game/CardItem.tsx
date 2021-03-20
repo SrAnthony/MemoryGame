@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { CardsList } from './Cards'
+import { Dimensions } from 'react-native'
 import styled, { css } from 'styled-components/native'
 import TouchableScale from '../../Components/TouchableScale'
 import CardFlip from 'react-native-card-flip'
@@ -10,7 +11,7 @@ type CardItemProps = {
   index: number,
   item: typeof CardsList[0],
   onCardPress: (card: typeof CardsList[0], index: number) => void,
-  cardsRef: any
+  cardsRef: React.MutableRefObject<(CardFlip | null)[]>,
 }
 
 const CardItem: React.FC<CardItemProps> = ({ item, index, onCardPress, cardsRef }) => {
@@ -32,9 +33,20 @@ export default memo(CardItem)
 
 export const CARDS_PER_ROW = 4
 
+const CARD_IMAGE_RATIO = 713 / 500
+
+// Flatlist tem 5 de padding horizontal, por isso o - 10 aqui
+const SCREEN_WIDTH = Dimensions.get('window').width - 10
+
+const StyledCardFlip = styled(CardFlip)`
+  width: ${(SCREEN_WIDTH / CARDS_PER_ROW) - 10}px;
+  height: ${(SCREEN_WIDTH * CARD_IMAGE_RATIO / CARDS_PER_ROW) - 10}px;
+  margin: 5px;
+`
+
 const CardImage = styled.ImageBackground<{ withShadow?: boolean }>`
-  width: ${p => (p.theme.screen_width / CARDS_PER_ROW) - 10}px;
-  height: ${p => (p.theme.screen_width * 713 / 500 / CARDS_PER_ROW) - 10}px;
+  width: 100%;
+  height: 100%;
 
   ${p => p.withShadow && css`
     shadow-color: #333;
@@ -43,10 +55,4 @@ const CardImage = styled.ImageBackground<{ withShadow?: boolean }>`
     shadow-radius: 6px;
     elevation: 1;
   `}
-`
-
-const StyledCardFlip = styled(CardFlip)`
-  width: ${p => (p.theme.screen_width / CARDS_PER_ROW) - 10}px;
-  height: ${p => (p.theme.screen_width * 713 / 500 / CARDS_PER_ROW) - 10}px;
-  margin: 5px;
 `
