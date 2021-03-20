@@ -3,6 +3,7 @@ import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/Mem
 import { useNavigation } from '@react-navigation/native'
 import { Button, Row, Text } from 'MemoryGame'
 import styled from 'styled-components/native'
+import Logo from './Logo'
 
 const Home: React.FC = () => {
   const dispatch = useMemoryGameDispatch()
@@ -24,6 +25,8 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Row pTop={35} column>
+        <Logo />
+        
         {/* @ts-ignore */}
         <Button onPress={() => navigation.navigate('Game')}>
           <Text size="large" color="primary">
