@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
 import { useNavigation } from '@react-navigation/native'
-import { Button, Row, Text } from 'MemoryGame'
+import { Avatar, Button, Row, Text } from 'MemoryGame'
+import { Linking } from 'react-native'
 import styled from 'styled-components/native'
-import Logo from './Logo'
+import Logo from '../../Components/Logo'
+import TouchableScale from '../../Components/TouchableScale'
 
 const Home: React.FC = () => {
   const dispatch = useMemoryGameDispatch()
@@ -30,7 +32,7 @@ const Home: React.FC = () => {
         {/* @ts-ignore */}
         <Button onPress={() => navigation.navigate('Game')}>
           <Text size="large" color="primary">
-            JOGAR
+            NOVO JOGO
           </Text>
         </Button>
         
@@ -46,6 +48,25 @@ const Home: React.FC = () => {
             SAIR
           </Text>
         </Button>
+        
+        <Row pTop={35} alignCenter justifyCenter>
+          <Avatar source={current_player.avatar.image} size={40} />
+          
+          <Text size="medium" color="primary" pLeft={15}>
+            {current_player.name}
+          </Text>
+        </Row>
+        
+        <TouchableScale onPress={() => Linking.openURL('https://github.com/SrAnthony/MemoryGame')}>
+          <Row pTop={50} alignCenter justifyCenter column>
+            <Text color="light_gray">
+              Desenvolvido por
+            </Text>
+            <Text size="medium" color="light_gray">
+              Anthony Nadaletti
+            </Text>
+          </Row>
+        </TouchableScale>
       </Row>
     </Container>
   )

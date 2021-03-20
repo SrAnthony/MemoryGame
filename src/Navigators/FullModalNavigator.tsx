@@ -18,7 +18,7 @@ const FullModalNavigator: React.FC = () => {
     >
       <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
       <Stack.Screen name="AvatarSelector" component={AvatarSelector} />
-      <Stack.Screen name="Login" component={Login} options={{ gestureEnabled: true }} />
+      <Stack.Screen name="Login" component={Login} options={{ gestureEnabled: false }} />
     </Stack.Navigator>
   )
 }

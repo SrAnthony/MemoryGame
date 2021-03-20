@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native'
 import styled from 'styled-components/native'
 import PlayerAvatar from './PlayerAvatar'
+import Logo from '../../Components/Logo'
 
 const Login: React.FC = () => {
   const [name, setName] = useState('')
@@ -23,6 +24,8 @@ const Login: React.FC = () => {
   
   return (
     <Container behavior={Platform.select({ ios: 'padding' })}>
+      <Logo />
+      
       <PlayerAvatar />
       
       <Row pTop={35}>
@@ -49,9 +52,8 @@ export default Login
 
 const Container = styled.KeyboardAvoidingView`
   flex: 1;
-  justify-content: center;
   align-items: center;
-  margin: 0 35px;
+  margin: 50px 35px 0 35px;
 `
 
 const NameInput = styled.TextInput`
