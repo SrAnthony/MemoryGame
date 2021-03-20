@@ -7,10 +7,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 type MemoryGameStateType = {
   current_player: MemoryGame.PlayerType,
+  ranking: MemoryGame.RankingType[],
 }
 
 export type MemoryGameActionType =
-  | { type: 'set_current_player', payload: MemoryGameStateType['current_player'] }
+  | { type: 'set_current_player', payload: MemoryGame.PlayerType }
+  | { type: 'add_game_to_ranking', payload: MemoryGame.RankingType['rounds'] }
 
 const initial_state: MemoryGameStateType = {
   current_player: {
@@ -18,21 +20,36 @@ const initial_state: MemoryGameStateType = {
     // Quando abre o aplicativo (e não está logado) carrega um animal aleatorio
     avatar: Animals[Math.floor(Math.random() * Animals.length)],
   },
+  ranking: [],
 }
 
 export const useMemoryGameSelector = createSelectorHook<MemoryGameStateType, MemoryGameActionType>()
 
 export const useMemoryGameDispatch = createDispatchHook<MemoryGameStateType, MemoryGameActionType>()
 
-const MemoryGameReducer = (state = initial_state, action: MemoryGameActionType) => {
-  // Cria todos os sets
-  if (action.type.includes('set_') && 'payload' in action) {
-    const key = action.type.split('set_')[1]
-    
-    return { ...state, [key]: action.payload }
+const addGameToRanking = (state: MemoryGameStateType, rounds: number) => {
+  const user_ranking = { player: state.current_player, rounds }
+  
+  const index = state.ranking.findIndex(rank => rank.player.name === state.current_player.name)
+  if (index === -1) {
+    return { ...state, ranking: [...state.ranking, user_ranking] }
   }
   
-  return state
+  const new_ranking = [...state.ranking]
+  new_ranking[index] = user_ranking
+  
+  return { ...state, ranking: new_ranking }
+}
+
+const MemoryGameReducer = (state = initial_state, action: MemoryGameActionType) => {
+  switch (action.type) {
+    case 'add_game_to_ranking':
+      return addGameToRanking(state, action.payload)
+    case 'set_current_player':
+      return { ...state, current_player: action.payload }
+    default:
+      return state
+  }
 }
 
 const persist_config = {

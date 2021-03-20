@@ -1,67 +1,38 @@
 import React, { useMemo } from 'react'
-import { Avatar, Row, Text } from 'MemoryGame'
 import { useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
 import { FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import BackButton from '../../Components/BackButton'
+import { Text } from 'MemoryGame'
+import Header from './Header'
+import RankingItem from './RankingItem'
 
 const Ranking: React.FC = () => {
-  const current_player = useMemoryGameSelector(state => state.current_player)
+  const ranking = useMemoryGameSelector(state => state.ranking)
   
   const insets = useSafeAreaInsets()
   
-  const fake_data = useMemo(() => {
-    return [...Array(10)].map((_, i) => ({
-      ...current_player, name: `${current_player.name} ${i}`,
-    }))
-  }, [])
+  const sorted_ranking = useMemo(() => (
+    ranking.sort((a, b) => a.rounds - b.rounds)
+  ), [ranking])
   
   return (
     <FlatList
-      data={fake_data}
-      keyExtractor={item => item.name}
+      data={sorted_ranking}
+      keyExtractor={item => item.player.name}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
         paddingHorizontal: 30,
       }}
-      ListHeaderComponent={
-        <>
-          <BackButton />
-          
-          <Text size={40} pBottom={30}>
-            Ranking
-          </Text>
-          
-          <Row alignCenter pBottom={50}>
-            <Avatar source={current_player.avatar.image} size={80} />
-            
-            <Row column pLeft={20}>
-              <Text size="large" color="primary">
-                {current_player.name}
-              </Text>
-              <Text size="medium" color="light_gray" pTop={5}>
-                Recorde: 25 jogadas
-              </Text>
-            </Row>
-          </Row>
-        </>
+      ListEmptyComponent={
+        <Text alignCenter size="large" color="light_gray" pTop={50}>
+          Nenhum jogo para ser exibido
+        </Text>
       }
+      ListHeaderComponent={<Header />}
       renderItem={({ item }) => (
-        <Row pBottom={15} alignCenter>
-          <Avatar source={item.avatar.image} size={50} />
-          
-          <Row justify="space-between" isFlex>
-            <Text pLeft={20} size="medium">
-              {item.name}
-            </Text>
-            
-            <Text size="medium">
-              25
-            </Text>
-          </Row>
-        </Row>
+        <RankingItem item={item} />
       )}
     />
   )

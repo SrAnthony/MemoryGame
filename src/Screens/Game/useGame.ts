@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { CardsList } from './Cards'
 import { useNavigation } from '@react-navigation/native'
+import { useMemoryGameDispatch } from '../../Reducers/MemoryGameReducer'
 import CardFlip from 'react-native-card-flip'
 import useModalComponent from '../../Components/useModalComponent'
 import AlertModal from '../../Components/AlertModal'
@@ -14,6 +15,8 @@ const useGame = (
   const [rounds, setRounds] = useState(0)
   
   const navigation = useNavigation()
+  
+  const dispatch = useMemoryGameDispatch()
   
   // Ao virar duas cartas e elas não forem iguais, então aguarda 1 segundo e as esconde
   // Esse ref é usado para não permitir virar outra carta durante esse período
@@ -34,7 +37,10 @@ const useGame = (
   
   // Quando ganha o jogo
   useEffect(() => {
-    game_is_finished && openSuccessModal()
+    if (!game_is_finished) return
+    
+    openSuccessModal()
+    dispatch({ type: 'add_game_to_ranking', payload: rounds })
   }, [game_is_finished])
   
   const onCardPress = useCallback((card: typeof CardsList[0], index: number) => {
