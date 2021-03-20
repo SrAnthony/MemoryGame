@@ -2,8 +2,10 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { CardsList } from './Cards'
+import { Text } from 'MemoryGame'
+import CardItem, { CARDS_PER_ROW } from './CardItem'
 import styled from 'styled-components/native'
-import CardItem from './CardItem'
+import CardFlip from 'react-native-card-flip'
 
 const shuffle = (arra1: any[]) => {
   let ctr = arra1.length, temp, index
@@ -25,10 +27,15 @@ const shuffle = (arra1: any[]) => {
 const Game: React.FC = () => {
   const [flipped_cards, setFlippedCards] = useState<number[]>([])
   const [playing_cards, setPlayingCards] = useState<number[]>([])
+  const [rounds, setRounds] = useState(0)
   
   const insets = useSafeAreaInsets()
   
+  // Ao virar duas cartas e elas não forem iguais, então aguarda 1 segundo e as esconde
+  // Esse ref é usado para não permitir virar outra carta durante esse período
   const isWaitingRef = useRef(false)
+  
+  const cardsRef = useRef<CardFlip[]>([])
   
   // Eu randomizo a lista de todos os cards e pego 8 deles
   // Depois eu duplico a lista e randomizo de novo
@@ -41,10 +48,17 @@ const Game: React.FC = () => {
   const onCardPress = useCallback((card: typeof CardsList[0], index: number) => {
     if (isWaitingRef.current) return
     
+    setRounds(prev => prev + 1)
+    
+    cardsRef.current[index]?.flip()
+    
+    // Tudo feito dentro do setPlayingCards para não usar o valor dos estados e evitar colocá-los na lista de
+    // dependencia desse useCallback. Dessa forma os cards do jogo só são atualizados quando o is_flipped é alterado.
     setPlayingCards(prev_playing_cards => {
       if (prev_playing_cards.length === 0) {
         return [index]
       }
+      
       // Se está pressionando a segunda carta e é igual ao que selecionou antes
       if (card.key === random_cards[prev_playing_cards[0]].key) {
         setFlippedCards(prev => [...prev, index, prev_playing_cards[0]])
@@ -53,6 +67,9 @@ const Game: React.FC = () => {
       
       isWaitingRef.current = true
       setTimeout(() => {
+        cardsRef.current[index]?.flip()
+        cardsRef.current[prev_playing_cards[0]]?.flip()
+        
         setPlayingCards([])
         isWaitingRef.current = false
       }, 1000)
@@ -70,6 +87,7 @@ const Game: React.FC = () => {
         index={index}
         item={item}
         onCardPress={onCardPress}
+        cardsRef={cardsRef}
       />
     )
   }, [flipped_cards, playing_cards])
@@ -79,12 +97,18 @@ const Game: React.FC = () => {
       <FlatList
         scrollEnabled={false}
         data={random_cards}
-        numColumns={4}
+        key={CARDS_PER_ROW}
+        numColumns={CARDS_PER_ROW}
         keyExtractor={useCallback((_, index) => index.toString(), [])}
+        renderItem={renderItem}
+        ListHeaderComponent={
+          <Text size="large" alignCenter pBottom={25}>
+            Jogadas: {rounds}
+          </Text>
+        }
         contentContainerStyle={{
           paddingTop: insets.top,
         }}
-        renderItem={renderItem}
       />
     </Container>
   )
