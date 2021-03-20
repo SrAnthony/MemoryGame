@@ -8,7 +8,6 @@ import styled from 'styled-components/native'
 import CardFlip from 'react-native-card-flip'
 import useAvoidLeavingScreen from './useAvoidLeavingScreen'
 import Footer from './Footer'
-import useRandomCards from './useRandomCards'
 import useGame from './useGame'
 
 const Game: React.FC = () => {
@@ -16,11 +15,9 @@ const Game: React.FC = () => {
   
   const cardsRef = useRef<(CardFlip | null)[]>([])
   
-  const random_cards = useRandomCards()
+  const { onCardPress, rounds, game_is_finished, random_cards } = useGame(cardsRef)
   
-  const { onCardPress, rounds, game_is_finished } = useGame(cardsRef, random_cards)
-  
-  useAvoidLeavingScreen(rounds > 0)
+  useAvoidLeavingScreen({ is_playing: rounds > 0 && !game_is_finished })
   
   const renderItem = useCallback(({ item, index }: { item: typeof CardsList[0], index: number }) => (
     <CardItem
@@ -36,7 +33,6 @@ const Game: React.FC = () => {
       <FlatList
         bounces={false}
         data={random_cards}
-        key={CARDS_PER_ROW}
         numColumns={CARDS_PER_ROW}
         keyExtractor={useCallback((_, index) => index.toString(), [])}
         renderItem={renderItem}
@@ -51,8 +47,6 @@ const Game: React.FC = () => {
           paddingHorizontal: 5,
         }}
       />
-    
-    
     </Container>
   )
 }

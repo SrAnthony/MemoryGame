@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { CardsList } from './Cards'
-import { useNavigation } from '@react-navigation/native'
 import { useMemoryGameDispatch } from '../../Reducers/MemoryGameReducer'
+import { useNavigation } from '@react-navigation/native'
+import useRandomCards, { CARDS_NUMBER } from './useRandomCards'
 import CardFlip from 'react-native-card-flip'
 import useModalComponent from '../../Components/useModalComponent'
 import AlertModal from '../../Components/AlertModal'
 
-const useGame = (
-  cardsRef: React.MutableRefObject<(CardFlip | null)[]>,
-  random_cards: typeof CardsList,
-) => {
+const useGame = (cardsRef: React.MutableRefObject<(CardFlip | null)[]>) => {
   const [flipped_cards, setFlippedCards] = useState<number[]>([])
   const [playing_cards, setPlayingCards] = useState<number[]>([])
   const [rounds, setRounds] = useState(0)
   
+  const dispatch = useMemoryGameDispatch()
+  
   const navigation = useNavigation()
   
-  const dispatch = useMemoryGameDispatch()
+  const random_cards = useRandomCards()
   
   // Ao virar duas cartas e elas não forem iguais, então aguarda 1 segundo e as esconde
   // Esse ref é usado para não permitir virar outra carta durante esse período
@@ -27,13 +27,16 @@ const useGame = (
     subtitle: `Você finalizou o jogo em ${rounds} rodadas!`,
     buttons: [{
       label: 'Jogar de novo',
+      onPress: () => {
+        dispatch({ type: 'set_game_key', payload: Math.random().toString() })
+      },
     }, {
       label: 'Sair',
-      onPress: () => navigation.goBack(),
+      onPress: () => navigation.navigate('Home'),
     }],
   })
   
-  const game_is_finished = playing_cards.length === 0 && flipped_cards.length === 16
+  const game_is_finished = playing_cards.length === 0 && flipped_cards.length === (CARDS_NUMBER * 2)
   
   // Quando ganha o jogo
   useEffect(() => {
@@ -76,7 +79,7 @@ const useGame = (
     })
   }, [])
   
-  return { onCardPress, rounds, game_is_finished }
+  return { onCardPress, rounds, game_is_finished, random_cards }
 }
 
 export default useGame

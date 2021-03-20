@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import useModalComponent from '../../Components/useModalComponent'
 import AlertModal from '../../Components/AlertModal'
 
-const useAvoidLeavingScreen = (is_playing: boolean) => {
+const useAvoidLeavingScreen = ({ is_playing }: { is_playing: boolean }) => {
   const navigation = useNavigation()
   
   const [openAlertModal] = useModalComponent(AlertModal, {

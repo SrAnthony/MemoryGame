@@ -8,10 +8,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 type MemoryGameStateType = {
   current_player: MemoryGame.PlayerType,
   ranking: MemoryGame.RankingType[],
+  game_key: string,
 }
 
 export type MemoryGameActionType =
   | { type: 'set_current_player', payload: MemoryGame.PlayerType }
+  | { type: 'set_game_key', payload: string }
   | { type: 'add_game_to_ranking', payload: MemoryGame.RankingType['rounds'] }
 
 const initial_state: MemoryGameStateType = {
@@ -21,6 +23,7 @@ const initial_state: MemoryGameStateType = {
     avatar: Animals[Math.floor(Math.random() * Animals.length)],
   },
   ranking: [],
+  game_key: Math.random().toString(),
 }
 
 export const useMemoryGameSelector = createSelectorHook<MemoryGameStateType, MemoryGameActionType>()
@@ -47,6 +50,8 @@ const MemoryGameReducer = (state = initial_state, action: MemoryGameActionType) 
       return addGameToRanking(state, action.payload)
     case 'set_current_player':
       return { ...state, current_player: action.payload }
+    case 'set_game_key':
+      return { ...state, game_key: action.payload }
     default:
       return state
   }

@@ -2,15 +2,16 @@ import React from 'react'
 import { createNativeStackNavigator } from 'react-native-screens/native-stack'
 import { HomeStackParamList } from './Types'
 import { useMemoryGameSelector } from '../Reducers/MemoryGameReducer'
-import Home from '../Screens/Home/Home'
 import Ranking from '../Screens/Ranking/Ranking'
 import Game from '../Screens/Game/Game'
 import Login from '../Screens/Login/Login'
+import Home from '../Screens/Home/Home'
 
 const Stack = createNativeStackNavigator<HomeStackParamList>()
 
 const HomeNavigator: React.FC = () => {
   const current_player = useMemoryGameSelector(state => state.current_player)
+  const game_key = useMemoryGameSelector(state => state.game_key)
   
   return (
     <Stack.Navigator
@@ -23,7 +24,11 @@ const HomeNavigator: React.FC = () => {
         <>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Ranking" component={Ranking} />
-          <Stack.Screen name="Game" component={Game} />
+          
+          {/* A key é para quando quiser resetar o jogo */}
+          <Stack.Screen name="Game">
+            {() => <Game key={game_key} />}
+          </Stack.Screen>
         </>
       ) : (
         <Stack.Screen name="Login" component={Login} options={{ gestureEnabled: false }} />
