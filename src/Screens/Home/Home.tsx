@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
 import { useNavigation } from '@react-navigation/native'
 import { Avatar, Button, Row, Text } from 'MemoryGame'
@@ -6,6 +6,8 @@ import { Linking } from 'react-native'
 import styled from 'styled-components/native'
 import Logo from '../../Components/Logo'
 import TouchableScale from '../../Components/TouchableScale'
+import useModalComponent from '../../Components/useModalComponent'
+import AlertModal from '../../Components/AlertModal'
 
 const Home: React.FC = () => {
   const dispatch = useMemoryGameDispatch()
@@ -13,16 +15,18 @@ const Home: React.FC = () => {
   
   const navigation = useNavigation()
   
-  const logout = () => {
-    dispatch({ type: 'set_current_player', payload: { ...current_player, name: '' } })
-  }
-  
-  useEffect(() => {
-    if (current_player.name) return
-    
-    // @ts-ignore
-    navigation.navigate('Login')
-  }, [current_player])
+  const [openLogoutModal] = useModalComponent(AlertModal, {
+    title: 'Deseja sair?',
+    subtitle: 'Para voltar, utilize o mesmo nome. Você pode alterar seu avatar a qualquer momento.',
+    buttons: [{
+      label: 'Sim, sair',
+      onPress: () => {
+        dispatch({ type: 'set_current_player', payload: { ...current_player, name: '' } })
+      },
+    }, {
+      label: 'Não, voltar',
+    }],
+  })
   
   return (
     <Container>
@@ -43,7 +47,7 @@ const Home: React.FC = () => {
           </Text>
         </Button>
         
-        <Button style={{ marginTop: 15 }} onPress={logout}>
+        <Button style={{ marginTop: 15 }} onPress={() => openLogoutModal()}>
           <Text size="large" color="primary">
             SAIR
           </Text>

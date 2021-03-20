@@ -5,12 +5,12 @@ type HomeStackParamList = {
   Home: undefined,
   Ranking: undefined,
   Game: undefined,
+  Login: undefined,
 }
 
 type FullModalStackParamList = {
   HomeNavigator: NavigatorScreenParams<HomeStackParamList>,
   AvatarSelector: undefined,
-  Login: undefined,
 }
 
 type FullModalRouteType<T extends keyof FullModalStackParamList> = RouteProp<FullModalStackParamList,

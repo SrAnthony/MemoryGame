@@ -26,7 +26,7 @@ const AvatarSelector: React.FC = () => {
       numColumns={3}
       contentContainerStyle={{
         alignItems: 'center',
-        paddingBottom: insets.bottom,
+        paddingBottom: insets.bottom || 30,
       }}
       ListHeaderComponent={
         <Text size="large" alignCenter paddings={[30, 0]}>

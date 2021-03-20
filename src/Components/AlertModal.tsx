@@ -70,7 +70,7 @@ const Content = styled.View`
   align-items: center;
   padding: 25px;
   border-radius: 15px;
-  border: 1px solid #555;
+  border: 2px solid ${p => p.theme.colors.primary};
   background-color: ${p => p.theme.colors.background};
   max-width: 320px;
 `

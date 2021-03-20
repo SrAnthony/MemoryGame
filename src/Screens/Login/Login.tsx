@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Row, Text } from 'MemoryGame'
 import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/MemoryGameReducer'
-import { useNavigation } from '@react-navigation/native'
-import { Platform } from 'react-native'
+import { Keyboard, ScrollView } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 import PlayerAvatar from './PlayerAvatar'
 import Logo from '../../Components/Logo'
@@ -10,41 +10,50 @@ import Logo from '../../Components/Logo'
 const Login: React.FC = () => {
   const [name, setName] = useState('')
   
+  const insets = useSafeAreaInsets()
+  
   const dispatch = useMemoryGameDispatch()
   const current_player = useMemoryGameSelector(state => state.current_player)
-  
-  const navigation = useNavigation()
   
   const login = () => {
     if (name.length === 0) return
     
     dispatch({ type: 'set_current_player', payload: { ...current_player, name } })
-    navigation.goBack()
   }
   
   return (
-    <Container behavior={Platform.select({ ios: 'padding' })}>
-      <Logo />
-      
-      <PlayerAvatar />
-      
-      <Row pTop={35}>
-        <NameInput
-          placeholder="Informe o seu nome"
-          placeholderTextColor="#333"
-          onChangeText={setName}
-          onEndEditing={login}
-        />
-      </Row>
-      
-      <Row pTop={35}>
-        <Button onPress={login}>
-          <Text size="large" color="primary">
-            ENTRAR
-          </Text>
-        </Button>
-      </Row>
-    </Container>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      bounces={false}
+      keyboardShouldPersistTaps="always"
+      onTouchStart={Keyboard.dismiss}
+      contentContainerStyle={{ paddingTop: insets.top }}
+    >
+      <Container behavior="position">
+        <Logo />
+        
+        <PlayerAvatar />
+        
+        <Row pTop={35}>
+          <NameInput
+            placeholder="Informe o seu nome"
+            placeholderTextColor="#333"
+            onChangeText={setName}
+            autoCorrect={false}
+            autoCapitalize="words"
+            onSubmitEditing={login}
+          />
+        </Row>
+        
+        <Row pTop={35}>
+          <Button onPress={login}>
+            <Text size="large" color="primary">
+              ENTRAR
+            </Text>
+          </Button>
+        </Row>
+      </Container>
+    </ScrollView>
   )
 }
 

@@ -21,8 +21,8 @@ const Ranking: React.FC = () => {
       keyExtractor={item => item.player.name}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
+        paddingTop: insets.top || 30,
+        paddingBottom: insets.bottom || 30,
         paddingHorizontal: 30,
       }}
       ListEmptyComponent={
