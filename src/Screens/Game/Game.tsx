@@ -6,6 +6,7 @@ import { Text } from 'MemoryGame'
 import CardItem, { CARDS_PER_ROW } from './CardItem'
 import styled from 'styled-components/native'
 import CardFlip from 'react-native-card-flip'
+import useAvoidLeavingScreen from './useAvoidLeavingScreen'
 
 const shuffle = (arra1: any[]) => {
   let ctr = arra1.length, temp, index
@@ -30,6 +31,8 @@ const Game: React.FC = () => {
   const [rounds, setRounds] = useState(0)
   
   const insets = useSafeAreaInsets()
+  
+  useAvoidLeavingScreen(rounds > 0)
   
   // Ao virar duas cartas e elas não forem iguais, então aguarda 1 segundo e as esconde
   // Esse ref é usado para não permitir virar outra carta durante esse período
