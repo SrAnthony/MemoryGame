@@ -2,11 +2,12 @@ import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { CardsList } from './Cards'
-import { Text } from 'MemoryGame'
+import { Row, Text } from 'MemoryGame'
 import CardItem, { CARDS_PER_ROW } from './CardItem'
 import styled from 'styled-components/native'
 import CardFlip from 'react-native-card-flip'
 import useAvoidLeavingScreen from './useAvoidLeavingScreen'
+import TimePlayed from './TimePlayed'
 
 const shuffle = (arra1: any[]) => {
   let ctr = arra1.length, temp, index
@@ -82,11 +83,9 @@ const Game: React.FC = () => {
   }, [])
   
   const renderItem = useCallback(({ item, index }: { item: typeof CardsList[0], index: number }) => {
-    const is_flipped = flipped_cards.includes(index) || playing_cards.includes(index)
     
     return (
       <CardItem
-        is_flipped={is_flipped}
         index={index}
         item={item}
         onCardPress={onCardPress}
@@ -108,6 +107,11 @@ const Game: React.FC = () => {
           <Text size="large" alignCenter pBottom={25}>
             Jogadas: {rounds}
           </Text>
+        }
+        ListFooterComponent={
+          <Row column alignCenter pTop={25}>
+            <TimePlayed />
+          </Row>
         }
         contentContainerStyle={{
           paddingTop: insets.top,
