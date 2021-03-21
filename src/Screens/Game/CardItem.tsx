@@ -30,7 +30,7 @@ const CardItem: React.FC<CardItemProps> = ({ item, onCardPress, cardsRef }) => {
 
 export default memo(CardItem)
 
-export const CARDS_PER_ROW = 4
+export const CARDS_PER_ROW = 5
 
 const CARD_IMAGE_RATIO = 713 / 500
 

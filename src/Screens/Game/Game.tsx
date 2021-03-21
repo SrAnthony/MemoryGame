@@ -42,6 +42,7 @@ const Game: React.FC = () => {
     <Container>
       <FlatList
         bounces={false}
+        showsVerticalScrollIndicator={false}
         data={is_game_loaded ? random_cards : []}
         numColumns={CARDS_PER_ROW}
         keyExtractor={useCallback((_, index) => index.toString(), [])}
@@ -58,6 +59,7 @@ const Game: React.FC = () => {
         }
         contentContainerStyle={{
           paddingTop: insets.top,
+          paddingBottom: insets.bottom,
           paddingHorizontal: 5,
         }}
       />
