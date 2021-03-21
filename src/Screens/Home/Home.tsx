@@ -3,6 +3,7 @@ import { useMemoryGameDispatch, useMemoryGameSelector } from '../../Reducers/Mem
 import { useNavigation } from '@react-navigation/native'
 import { Avatar, Button, Row, Text } from 'MemoryGame'
 import { Linking } from 'react-native'
+import { HomeNavigationType } from '../../Navigators/Types'
 import styled from 'styled-components/native'
 import Logo from '../../Components/Logo'
 import TouchableScale from '../../Components/TouchableScale'
@@ -13,7 +14,7 @@ const Home: React.FC = () => {
   const dispatch = useMemoryGameDispatch()
   const current_player = useMemoryGameSelector(state => state.current_player)
   
-  const navigation = useNavigation()
+  const navigation = useNavigation<HomeNavigationType<'Home'>>()
   
   const [openLogoutModal] = useModalComponent(AlertModal, {
     title: 'Deseja sair?',
@@ -33,15 +34,13 @@ const Home: React.FC = () => {
       <Row pTop={35} column>
         <Logo />
         
-        {/* @ts-ignore */}
-        <Button onPress={() => navigation.navigate('Game')}>
+        <Button onPress={() => navigation.navigate({ name: 'Game', key: 'Game' })}>
           <Text size="large" color="primary">
             NOVO JOGO
           </Text>
         </Button>
         
-        {/* @ts-ignore */}
-        <Button style={{ marginTop: 15 }} onPress={() => navigation.navigate('Ranking')}>
+        <Button style={{ marginTop: 15 }} onPress={() => navigation.navigate({ name: 'Ranking', key: 'Ranking' })}>
           <Text size="large" color="primary">
             RANKING
           </Text>

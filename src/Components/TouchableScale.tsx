@@ -1,6 +1,5 @@
 import React from 'react'
 import { Platform, TouchableOpacityProps } from 'react-native'
-// @ts-ignore
 import OriginalTouchableScale from 'react-native-touchable-scale'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
@@ -10,7 +9,7 @@ type TouchableScaleProps = {
 } & TouchableOpacityProps
 
 const TouchableScale: React.FC<TouchableScaleProps> = (props) => {
-
+  
   return (
     <OriginalTouchableScale
       activeScale={.95}
@@ -18,8 +17,8 @@ const TouchableScale: React.FC<TouchableScaleProps> = (props) => {
       {...props}
       onPress={(event) => {
         if (Platform.OS === 'ios')
-          ReactNativeHapticFeedback.trigger("impactLight", {})
-          
+          ReactNativeHapticFeedback.trigger('impactLight', {})
+        
         props.onPress?.(event)
       }}
     />
