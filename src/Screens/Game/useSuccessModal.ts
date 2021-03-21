@@ -19,7 +19,10 @@ const useSuccessModal = (rounds: number) => {
       },
     }, {
       label: 'Sair',
-      onPress: () => navigation.navigate({ name: 'Home', key: 'Home' }),
+      onPress: () => {
+        navigation.navigate({ name: 'Home', key: 'Home' })
+        dispatch({ type: 'set_game_key', payload: Math.random().toString() })
+      },
     }],
   })
 }

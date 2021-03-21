@@ -38,6 +38,12 @@ const addGameToRanking = (state: MemoryGameStateType, rounds: number) => {
     return { ...state, ranking: [...state.ranking, user_ranking] }
   }
   
+  // Não atualiza o ranking se essa jogada for pior (tiver mais rounds)
+  const current_rank = state.ranking[index]
+  if (current_rank.rounds <= rounds) {
+    return state
+  }
+  
   const new_ranking = [...state.ranking]
   new_ranking[index] = user_ranking
   
