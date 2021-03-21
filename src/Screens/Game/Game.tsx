@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { CardType } from './Cards'
@@ -11,13 +11,24 @@ import Footer from './Footer'
 import useGame from './useGame'
 
 const Game: React.FC = () => {
+  // Só carrego as cartas depois que a tela finalizou a sua transição de entrada, para evitar travamentos e e lentidão
+  const [is_game_loaded, setIsGameLoaded] = useState(false)
+  
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsGameLoaded(true)
+    }, 500)
+    
+    return () => clearTimeout(timeout)
+  }, [])
+  
   const insets = useSafeAreaInsets()
   
   const cardsRef = useRef<Record<string, CardFlip | null>>({})
   
-  const { onCardPress, rounds, game_is_finished, random_cards } = useGame(cardsRef)
+  const { onCardPress, rounds, is_game_finished, random_cards } = useGame(cardsRef)
   
-  useAvoidLeavingScreen({ is_playing: rounds > 0 && !game_is_finished })
+  useAvoidLeavingScreen({ is_playing: rounds > 0 && !is_game_finished })
   
   const renderItem = useCallback(({ item }: { item: CardType }) => (
     <CardItem
@@ -31,7 +42,7 @@ const Game: React.FC = () => {
     <Container>
       <FlatList
         bounces={false}
-        data={random_cards}
+        data={is_game_loaded ? random_cards : []}
         numColumns={CARDS_PER_ROW}
         keyExtractor={useCallback((_, index) => index.toString(), [])}
         renderItem={renderItem}
@@ -40,7 +51,11 @@ const Game: React.FC = () => {
             Jogadas: {rounds}
           </Text>
         }
-        ListFooterComponent={<Footer time_paused={game_is_finished} />}
+        ListFooterComponent={
+          is_game_loaded
+            ? <Footer time_paused={is_game_finished} />
+            : undefined
+        }
         contentContainerStyle={{
           paddingTop: insets.top,
           paddingHorizontal: 5,

@@ -21,11 +21,11 @@ const useGame = (cardsRef: React.MutableRefObject<Record<string, CardFlip | null
   
   const [openSuccessModal] = useSuccessModal(rounds)
   
-  const game_is_finished = playing_cards.length === 0 && flipped_cards.length === (CARDS_NUMBER * 2)
+  const is_game_finished = playing_cards.length === 0 && flipped_cards.length === (CARDS_NUMBER * 2)
   
   // Quando ganha o jogo
   useEffect(() => {
-    if (!game_is_finished) return
+    if (!is_game_finished) return
     
     rootDispatch({ type: 'add_game_to_ranking', payload: rounds })
     
@@ -33,7 +33,7 @@ const useGame = (cardsRef: React.MutableRefObject<Record<string, CardFlip | null
     setTimeout(() => {
       openSuccessModal()
     }, 500)
-  }, [game_is_finished])
+  }, [is_game_finished])
   
   useEffect(() => {
     isWaitingRef.current = is_waiting
@@ -54,7 +54,7 @@ const useGame = (cardsRef: React.MutableRefObject<Record<string, CardFlip | null
     dispatch({ type: 'play_card', payload: { card, cardRef: cardsRef.current[card.key] } })
   }, [])
   
-  return { onCardPress, rounds, game_is_finished, random_cards }
+  return { onCardPress, rounds, is_game_finished, random_cards }
 }
 
 export default useGame

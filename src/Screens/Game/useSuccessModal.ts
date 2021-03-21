@@ -1,9 +1,12 @@
 import { useMemoryGameDispatch } from '../../Reducers/MemoryGameReducer'
+import { useNavigation } from '@react-navigation/native'
 import useModalComponent from '../../Components/useModalComponent'
 import AlertModal from '../../Components/AlertModal'
 
 const useSuccessModal = (rounds: number) => {
   const dispatch = useMemoryGameDispatch()
+  
+  const navigation = useNavigation()
   
   return useModalComponent(AlertModal, {
     title: 'Você ganhou!',
