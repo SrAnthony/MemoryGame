@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react'
 import { FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { CardsList } from './Cards'
+import { CardType } from './Cards'
 import { Text } from 'MemoryGame'
 import CardItem, { CARDS_PER_ROW } from './CardItem'
 import styled from 'styled-components/native'
@@ -13,15 +13,14 @@ import useGame from './useGame'
 const Game: React.FC = () => {
   const insets = useSafeAreaInsets()
   
-  const cardsRef = useRef<(CardFlip | null)[]>([])
+  const cardsRef = useRef<Record<string, CardFlip | null>>({})
   
   const { onCardPress, rounds, game_is_finished, random_cards } = useGame(cardsRef)
   
   useAvoidLeavingScreen({ is_playing: rounds > 0 && !game_is_finished })
   
-  const renderItem = useCallback(({ item, index }: { item: typeof CardsList[0], index: number }) => (
+  const renderItem = useCallback(({ item }: { item: CardType }) => (
     <CardItem
-      index={index}
       item={item}
       onCardPress={onCardPress}
       cardsRef={cardsRef}

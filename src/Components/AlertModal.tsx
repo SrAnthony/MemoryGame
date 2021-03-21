@@ -26,7 +26,7 @@ const AlertModal: ModalComponent<AlertModalProps> = ({ visible, close, title, su
       style={{ alignItems: 'center' }}
     >
       <Content>
-        <Text size="large" alignCenter>
+        <Text size="large" alignCenter color="primary">
           {title}
         </Text>
         

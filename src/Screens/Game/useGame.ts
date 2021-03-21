@@ -1,20 +1,17 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { CardsList } from './Cards'
+import React, { useCallback, useEffect, useReducer, useRef } from 'react'
+import { CardType } from './Cards'
 import { useMemoryGameDispatch } from '../../Reducers/MemoryGameReducer'
-import { useNavigation } from '@react-navigation/native'
+import { GameReducer, initial_state } from './GameReducer'
 import useRandomCards, { CARDS_NUMBER } from './useRandomCards'
 import CardFlip from 'react-native-card-flip'
-import useModalComponent from '../../Components/useModalComponent'
-import AlertModal from '../../Components/AlertModal'
+import useSuccessModal from './useSuccessModal'
 
-const useGame = (cardsRef: React.MutableRefObject<(CardFlip | null)[]>) => {
-  const [flipped_cards, setFlippedCards] = useState<number[]>([])
-  const [playing_cards, setPlayingCards] = useState<number[]>([])
-  const [rounds, setRounds] = useState(0)
+const useGame = (cardsRef: React.MutableRefObject<Record<string, CardFlip | null>>) => {
+  const [state, dispatch] = useReducer(GameReducer, initial_state)
   
-  const dispatch = useMemoryGameDispatch()
+  const { flipped_cards, playing_cards, rounds, is_waiting } = state
   
-  const navigation = useNavigation()
+  const rootDispatch = useMemoryGameDispatch()
   
   const random_cards = useRandomCards()
   
@@ -22,19 +19,7 @@ const useGame = (cardsRef: React.MutableRefObject<(CardFlip | null)[]>) => {
   // Esse ref é usado para não permitir virar outra carta durante esse período
   const isWaitingRef = useRef(false)
   
-  const [openSuccessModal] = useModalComponent(AlertModal, {
-    title: 'Você ganhou!',
-    subtitle: `Você finalizou o jogo em ${rounds} rodadas!`,
-    buttons: [{
-      label: 'Jogar de novo',
-      onPress: () => {
-        dispatch({ type: 'set_game_key', payload: Math.random().toString() })
-      },
-    }, {
-      label: 'Sair',
-      onPress: () => navigation.navigate('Home'),
-    }],
-  })
+  const [openSuccessModal] = useSuccessModal(rounds)
   
   const game_is_finished = playing_cards.length === 0 && flipped_cards.length === (CARDS_NUMBER * 2)
   
@@ -42,41 +27,31 @@ const useGame = (cardsRef: React.MutableRefObject<(CardFlip | null)[]>) => {
   useEffect(() => {
     if (!game_is_finished) return
     
-    openSuccessModal()
-    dispatch({ type: 'add_game_to_ranking', payload: rounds })
+    rootDispatch({ type: 'add_game_to_ranking', payload: rounds })
+    
+    // Um tempinho antes de abrir o modal só pra dar um tchan
+    setTimeout(() => {
+      openSuccessModal()
+    }, 500)
   }, [game_is_finished])
   
-  const onCardPress = useCallback((card: typeof CardsList[0], index: number) => {
-    if (isWaitingRef.current) return
+  useEffect(() => {
+    isWaitingRef.current = is_waiting
     
-    setRounds(prev => prev + 1)
+    if (!is_waiting) return
     
-    cardsRef.current[index]?.flip()
+    const timeout = setTimeout(() => {
+      cardsRef.current[playing_cards[0]?.key]?.flip()
+      cardsRef.current[playing_cards[1]?.key]?.flip()
+      
+      dispatch({ type: 'stop_waiting' })
+    }, 1000)
     
-    // Tudo feito dentro do setPlayingCards para não usar o valor dos estados e evitar colocá-los na lista de
-    // dependencia desse useCallback. Dessa forma os cards do jogo só são atualizados quando realmente preciso.
-    setPlayingCards(prev_playing_cards => {
-      if (prev_playing_cards.length === 0) {
-        return [index]
-      }
-      
-      // Se está pressionando a segunda carta e é igual ao que selecionou antes
-      if (card.key === random_cards[prev_playing_cards[0]].key) {
-        setFlippedCards(prev => [...prev, index, prev_playing_cards[0]])
-        return []
-      }
-      
-      isWaitingRef.current = true
-      setTimeout(() => {
-        cardsRef.current[index]?.flip()
-        cardsRef.current[prev_playing_cards[0]]?.flip()
-        
-        setPlayingCards([])
-        isWaitingRef.current = false
-      }, 1000)
-      
-      return [...prev_playing_cards, index]
-    })
+    return () => clearTimeout(timeout)
+  }, [is_waiting])
+  
+  const onCardPress = useCallback((card: CardType) => {
+    dispatch({ type: 'play_card', payload: { card, cardRef: cardsRef.current[card.key] } })
   }, [])
   
   return { onCardPress, rounds, game_is_finished, random_cards }

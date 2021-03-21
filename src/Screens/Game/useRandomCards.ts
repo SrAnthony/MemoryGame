@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { CardsList } from './Cards'
 
-export const CARDS_NUMBER = 1
+export const CARDS_NUMBER = 8
 
 // Eu randomizo a lista de todos os cards e pego CARDS_NUMBER deles
 // Depois eu duplico a lista e randomizo de novo
@@ -10,6 +10,7 @@ const useRandomCards = (): typeof CardsList => {
     const cards = shuffle(CardsList).slice(0, CARDS_NUMBER)
     
     return shuffle([...cards, ...cards])
+      .map((card, i) => ({ ...card, key: `${card.key}-${i}` }))
   }, [])
 }
 

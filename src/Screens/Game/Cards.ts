@@ -28,6 +28,8 @@ export const Cards = {
   ['Assets/Cards/Asset27.png']: require('Assets/Cards/Asset27.png'),
 }
 
+export type CardType = typeof CardsList[0]
+
 export const CardsList = Object.entries(Cards).map(([key, value]) => ({
   key,
   name: key,

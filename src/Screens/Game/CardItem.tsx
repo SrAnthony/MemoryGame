@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { CardsList } from './Cards'
+import { CardType } from './Cards'
 import { Dimensions } from 'react-native'
 import styled, { css } from 'styled-components/native'
 import TouchableScale from '../../Components/TouchableScale'
@@ -8,18 +8,17 @@ import CardFlip from 'react-native-card-flip'
 const back_card = require('Assets/Cards/Back/Asset1.png')
 
 type CardItemProps = {
-  index: number,
-  item: typeof CardsList[0],
-  onCardPress: (card: typeof CardsList[0], index: number) => void,
-  cardsRef: React.MutableRefObject<(CardFlip | null)[]>,
+  item: CardType,
+  onCardPress: (card: CardType) => void,
+  cardsRef: React.MutableRefObject<Record<string, CardFlip | null>>,
 }
 
-const CardItem: React.FC<CardItemProps> = ({ item, index, onCardPress, cardsRef }) => {
+const CardItem: React.FC<CardItemProps> = ({ item, onCardPress, cardsRef }) => {
   
   return (
-    <StyledCardFlip ref={ref => cardsRef.current[index] = ref}>
+    <StyledCardFlip ref={ref => cardsRef.current[item.key] = ref}>
       <TouchableScale
-        onPress={() => onCardPress(item, index)}
+        onPress={() => onCardPress(item)}
       >
         <CardImage source={back_card} />
       </TouchableScale>
