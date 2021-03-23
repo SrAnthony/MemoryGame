@@ -6,10 +6,7 @@ import AlertModal from '../../Components/AlertModal'
 const useAvoidLeavingScreen = ({ is_playing }: { is_playing: boolean }) => {
   const navigation = useNavigation()
   
-  const [openAlertModal] = useModalComponent(AlertModal, {
-    title: 'Desistir do jogo?',
-    subtitle: 'Ao sair seu progresso será perdido',
-  })
+  const [openAlertModal] = useModalComponent(AlertModal)
   
   useEffect(() =>
     navigation.addListener('beforeRemove', (e) => {
@@ -19,6 +16,8 @@ const useAvoidLeavingScreen = ({ is_playing }: { is_playing: boolean }) => {
       e.preventDefault()
       
       openAlertModal({
+        title: 'Desistir do jogo?',
+        subtitle: 'Ao sair seu progresso será perdido',
         buttons: [{
           label: 'Continuar no jogo',
         }, {

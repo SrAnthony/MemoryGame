@@ -26,7 +26,7 @@ const HomeNavigator: React.FC = () => {
           <Stack.Screen name="Ranking" component={Ranking} />
           
           {/* A key é para quando quiser resetar o jogo */}
-          <Stack.Screen name="Game">
+          <Stack.Screen name="Game" options={{ gestureEnabled: false }}>
             {() => <Game key={game_key} />}
           </Stack.Screen>
         </>
